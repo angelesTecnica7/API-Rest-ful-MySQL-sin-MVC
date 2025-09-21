@@ -57,7 +57,7 @@ app.post('/users', async (req, res) => {
 
         connection.release();
 
-        // console.log(rows)
+        console.log(rows)
          //rows devuelve muchos datos entre ellos el id creado que lo uso para el send, insertId
         res.status(201).send(`Usuario Creado con id ${rows.insertId}`)
     } catch (error) {
@@ -76,7 +76,10 @@ app.put('/users/:id', async (req, res) => {
         const connection = await pool.getConnection();
         const [rows] = await connection.query(sql, [values, id]); 
         connection.release();
-        res.send(`Usuario Actulizado`)
+        // console.log(rows)
+        // console.info(rows.affectedRows)
+        if (rows.affectedRows == 0) { return res.send('Usuario no existe') }
+        res.send('Usuario actualizado')
     } catch (error) {
         res.status(500).send('ERROR, no se pudo realizar la consulta')
     }
