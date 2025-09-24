@@ -95,14 +95,14 @@ app.delete('/users/:id', async (req, res) => {
         connection.release();
         // console.log(rows)
         // //affectedRoews muestra la cant de registros actualizados si es igual a cero no modifico ningun registro
-        (rows.affectedRows == 0) ? res.send('Usuario no existe') : res.status(204).send('Usuario eliminado')
+        (rows.affectedRows == 0) ? res.send('Usuario no existe') : res.status(204).send()
     } catch (error) {
         res.status(500).send('ERROR, no se pudo realizar la consulta')
     }
 })
 
 //Paginas inexistentes - errores de url
-app.get((req, res) => {
+app.use((req, res) => {
     res.status(404).send('Pagina inexistente')
 })
 
